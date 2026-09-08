@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Habblet</title>
+    <link rel="icon" href="favicon.ico">
+    <title>Habblet </title>
 
     <style>
         html, body {
             margin: 0;
-            padding: 0;
             width: 100%;
             height: 100%;
             background: #000;
@@ -17,10 +17,9 @@
 
         video {
             position: fixed;
+            inset: 0;
             width: 100%;
             height: 100%;
-            top: 0;
-            left: 0;
             object-fit: cover;
         }
     </style>
@@ -28,46 +27,30 @@
 
 <body>
 
-    <video id="video" autoplay loop playsinline>
-        <source src="video.mp4?v=10" type="video/mp4">
-    </video>
+<video id="video" autoplay loop playsinline>
+    <source src="video.mp4?v=20" type="video/mp4">
+</video>
 
-    <script>
-        const video = document.getElementById("video");
+<script>
+    const video = document.getElementById("video");
 
+    video.muted = false;
+    video.volume = 1;
+
+    video.play().catch(() => {
+        // Navegador bloqueou autoplay com áudio
+    });
+
+    function ativar() {
         video.muted = false;
         video.volume = 1;
+        video.play();
+    }
 
-        function iniciarVideo() {
-            video.muted = false;
-            video.volume = 1;
-
-            const tentativa = video.play();
-
-            if (tentativa !== undefined) {
-                tentativa.catch(() => {
-                    // O navegador bloqueou o autoplay com áudio.
-                    // Tenta novamente na primeira interação do visitante.
-                });
-            }
-        }
-
-        window.addEventListener("load", iniciarVideo);
-
-        document.addEventListener("click", iniciarVideo);
-        document.addEventListener("touchstart", iniciarVideo);
-        document.addEventListener("keydown", iniciarVideo);
-
-        video.addEventListener("volumechange", () => {
-            if (video.muted) {
-                video.muted = false;
-            }
-
-            if (video.volume !== 1) {
-                video.volume = 1;
-            }
-        });
-    </script>
+    document.addEventListener("click", ativar);
+    document.addEventListener("touchstart", ativar);
+    document.addEventListener("keydown", ativar);
+</script>
 
 </body>
 </html>
