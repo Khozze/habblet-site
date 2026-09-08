@@ -1,38 +1,34 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <link rel="icon" href="favicon.ico">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Habblet</title>
 
     <style>
         html, body {
             margin: 0;
             width: 100%;
             height: 100%;
-            background: #000;
             overflow: hidden;
+            background: white;
         }
 
-        video {
+        #tela {
+            position: fixed;
+            inset: 0;
+            background: white;
+            z-index: 10;
+            cursor: pointer;
+        }
+
+        #video {
             position: fixed;
             inset: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: none;
-        }
-
-        #entrar {
-            position: fixed;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-family: Arial, sans-serif;
-            font-size: 28px;
-            cursor: pointer;
             background: black;
         }
     </style>
@@ -40,22 +36,23 @@
 
 <body>
 
-<div id="entrar">ENTRAR</div>
+<div id="tela"></div>
 
 <video id="video" loop playsinline>
-    <source src="video.mp4?v=30" type="video/mp4">
+    <source src="video.mp4?v=50" type="video/mp4">
 </video>
 
 <script>
-    const entrar = document.getElementById('entrar');
-    const video = document.getElementById('video');
+    const tela = document.getElementById("tela");
+    const video = document.getElementById("video");
 
-    entrar.addEventListener('click', async () => {
-        entrar.style.display = 'none';
-        video.style.display = 'block';
+    tela.addEventListener("click", async () => {
+        tela.style.display = "none";
+        video.style.display = "block";
 
         video.muted = false;
         video.volume = 1;
+        video.currentTime = 0;
 
         await video.play();
     });
